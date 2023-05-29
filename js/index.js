@@ -152,7 +152,7 @@ function initInterface(){
     loadingPromise.then(() => {
         //once all models are loaded we remove loading UI
         // Loader minimum time
-        var minimumLoaderDuration = 10000; //milliseconds
+        var minimumLoaderDuration = 1000; //milliseconds
         //first add class to fade
         setTimeout(function (){
             document.getElementById("gameLoader").classList.add('fade');
