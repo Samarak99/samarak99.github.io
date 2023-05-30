@@ -800,6 +800,16 @@ function createBottomBar(){
         scoreBox.isVisible = false;
     });
 
+    // Apply hover effect using Babylon.js GUI properties
+    scoreBoardButton.pointerEnterAnimation = () => {
+        scoreBoardButton.scaleX = 1.05
+        scoreBoardButton.scaleY = 1.05
+    };
+    scoreBoardButton.pointerOutAnimation = () => {
+        scoreBoardButton.scaleX = 1
+        scoreBoardButton.scaleY = 1
+    };
+
     // Handle home button click
     scoreBoardButton.onPointerUpObservable.add(function () {
         homeButton.isVisible = true;

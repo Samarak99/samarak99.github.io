@@ -61,14 +61,14 @@ const gameSettings = [
     {
         key: 5,
         time : 50,
-        collected_points : 40,
+        collected_points : 35,
         speed : 1.7
     },
     {
         key: 6,
         time : 50,
-        collected_points : 45,
-        speed : 1.7
+        collected_points : 40,
+        speed : 1.8
     }
 ];
 
@@ -424,8 +424,22 @@ function CreateCamera(){
 }
 
 async function CreateCharacter(){
+    let main_character_name = "character.glb"; //With mask and snorkel and fin
+    let mission_one_character_name = "character-m1.glb"; // Without mask, snorkel and fin
+    let mission_two_character_name = "character-m2.glb"; // With Mask, without snorkel and fin
+    let mission_three_character_name = "character-m3.glb"; // With mask and snorkel , without fin
+
+    let current_character = main_character_name;
+    // if(mission.key === 1)
+    //     current_character = mission_one_character_name;
+    // else if(mission.key === 2)
+    //     current_character = mission_two_character_name;
+    // else if(mission.key === 3)
+    //     current_character = mission_three_character_name;
+
+
     return new Promise(async (resolve) => {
-        const {meshes} = await BABYLON.SceneLoader.ImportMeshAsync("","./data/models/game/","character.glb");
+        const {meshes} = await BABYLON.SceneLoader.ImportMeshAsync("","./data/models/game/",current_character);
         const character = meshes[0];
         character.position = new BABYLON.Vector3(0, 1, 0);
         character.layerMask = 1;

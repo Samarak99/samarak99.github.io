@@ -237,7 +237,9 @@ A list of our 3D/2D Models made from scratch :
   <img src="./data/documentation/trophy-2.png" alt="trophy-2" style="width: 600px;">
   <img src="./data/documentation/awareness.png" alt="awareness" style="width: 400px;">
   <img src="./data/documentation/marine.png" alt="marine" style="width: 400px;">
-- Plastic Bottle & Cans
+- Plastic Bottle & Can
+- <img src="./data/documentation/bottle.jpeg" alt="bottle" style="width: 600px;">
+  <img src="./data/documentation/can.jpeg" alt="can" style="width: 600px;">
 - Character
 
 ## Sound Effects & Music Part  <a id="sound-effects--music-part"></a>
