@@ -10,6 +10,7 @@
 | - [Main Challenge 1: Movement](#main-challenge-1-movement)                 |
 | - [Main Challenge 2: BABYLON.GUI](#main-challenge-2-babylongui)            |
 | - [Main Challenge 3: Underwater Scene](#main-challenge-3-underwater-scene) |
+| - [Additional Important Details](#additional-important-details)            |
 | [Design Part :](#design-part)                                              |
 | - [UI/UX](#ui-ux)                                                          |
 | - [Modelling](#modelling)                                                  |
@@ -101,7 +102,7 @@ document.addEventListener("mousemove", (event) => {
 });
 ```
 
-To enhance the camera movement, I initially used a FollowCamera but encountered issues with smoothness and ball movement. Seeking guidance, I consulted Mr. Michel Buffa, who provided helpful advice. He suggested using camera.getTarget(), normalizing it, and then moving the camera in that direction. I incorporated this approach into my code and created a bounding box to simplify movement, and it did really fix my issues. Here is the final code snippet for the movement:
+To enhance the camera movement, I initially used a FollowCamera but encountered issues with smoothness and ball movement and the rotationQuaternion wasn't working as expected. Seeking guidance, I consulted Mr. Michel Buffa, who provided helpful advice. He suggested using camera.getTarget(), normalizing it, and then moving the camera in that direction. I incorporated this approach into my code and created a bounding box to simplify movement, and it did really fix my issues. Here is the final code snippet for the movement:
 
 ```
 function moveCharacter(){
@@ -140,6 +141,8 @@ function moveCharacter(){
 
 ```
 
+One final issue for the movement, was that since we were always moving, the axes placement was changing. So on Game over or Winner, I tried to do some movement in the camera with the function AnimateCamera(). However, sometimes it was moving in an unwanted movement, so I commented it. But you can see the code of the function in game.js.
+
 ### Main Challenge 2: BABYLON.GUI <a id="main-challenge-2-babylongui"></a>
 
 During the development of EcoMind, one of the main challenges I encountered was implementing the user interface using BABYLON.GUI. As a web developer with a strong background in HTML and CSS, I initially created the interface using traditional web technologies. However, considering that the game is built on Babylon.js, I decided to leverage the power of BABYLON.GUI and dive deeper into the framework.
@@ -158,9 +161,34 @@ I followed the steps outlined in the tutorial, and created my own shadow caustic
 
 Despite my efforts, I was unable to fully achieve the desired feeling of being underwater. The available water material only provided a surface-level representation, lacking the depth and immersion I was aiming for. I searched ways to create a more realistic underwater environment, but my search yielded no satisfactory results. It became clear that the challenge of capturing the true essence of being underwater remained unresolved, leaving room for further exploration and experimentation in the future.
 
+P.S : The bottles, and cans underwater were given an animation to make the underwater scene feel more realistic.
+
+### Additional Important Details <a id="additional-important-details"></a>
+
+While creating the game, I focused on the flow of the game, and tried as much as I can to ensure a smooth flow without any mistakes.
+
+For saving the states at my game I have the following variables added to the sessionStorage:
+- Current_mission is used in case we want to replay a specific mission that we have already locked . It contains the id of the missions : 1,2,3,4,5,6.
+- mission_completed is used to save the index of the highest mission completed.
+- user_items is to check the unlocked prizes.
+- high_score is to save the highest score of each session : {"1":10,"2":30, ...}.
+
+
+After playing for many times, I noticed that  when I click on specific mission, and click continue, the user as always playing same mission, because on continue the current session wasn't updating, and then on play it was also stuck on the same level.                                                                                                                        
+To fix it , I updated the current mission on each next. and when I press Play from the lobby I removed the current_session because this button should redirect to the highest mission completed.
+
+Another detail that I focused on was the loader. Even after adding the promise to resolve when all meshes were imported, when the user was playing the game for the first time, the game was starting before the ground is fully loaded.
+Consequently, I added the following condition to make sure that first time there is always more time for loader:
+
+```
+     if(mission.key === 1 && !sessionStorage.getItem('mission_completed'))
+            minimumLoaderDuration = 4000;
+
+```
+
 ## Design Part  <a id="design-part"></a>
 
-With the help of Elie Ibrahim, a 3D artist and animator, we created all our models from scratch, and we focused on the user interface and user experience. The Software used were Blender and Adobe Substance 3D.
+With the help of Elie Ibrahim, a 3D artist and animator and also my partner in life and any project we develop, we created all our models from scratch, and we focused on the user interface and user experience. The Software used were Blender and Adobe Substance 3D.
 
 We really tried to take this competition to a higher level in focusing on all the designs. Even the loader, and the buttons. 
 
@@ -214,7 +242,7 @@ A list of our 3D/2D Models made from scratch :
 
 ## Sound Effects & Music Part  <a id="sound-effects--music-part"></a>
 
-With the help of Sassine Abi Khalil, a music composer, we created the following list of sound effects and music on Cubase Software:
+With the help of Sassine Abi Khalil, a music composer and my brother, we created the following list of sound effects and music on Cubase Software:
 
 ![Cubase](./data/documentation/cubase.jpeg)
 - Lobby Background Music
@@ -230,11 +258,12 @@ As a first-time participant in a game competition, I found the experience to be 
 
 During the development process, I encountered a few challenges and identified areas for improvement in Babylon.js. One aspect I found less intuitive was the GUI. While it offers a wide range of features, I felt that certain tasks, such as smoothly scaling a button on hover, required more lines of code compared to a simpler approach using SCSS. Additionally, I noticed a lack of comprehensive examples and up-to-date playgrounds covering all topics. It would be beneficial to have an extensive library of references and demos to explore and learn from.
 
-GUI few Improvements:
+Few Improvements for GUI:
 - Hover effects
 - Buttons should automatically have a pointer cursor
 - Adding Margins could be useful to differ from padding
 - Important Feature : Adding backgroundImage for buttons, rectangles ....
+- Responsiveness 
 
 On the positive side, I greatly appreciated the thorough documentation provided by Babylon.js. It is not merely a basic library but a rich ecosystem that incorporates concepts from Blender and Maya. Throughout my learning journey, I found the following links to be particularly helpful and enjoyable:
 - [Node Editor](https://nme.babylonjs.com/)
@@ -245,4 +274,4 @@ In conclusion, I am delighted to have participated in this competition and disco
 
 I have given all my dedication and passion for details for this little game, and I hope you will like it. 
 
-P.S : The mission were simplified in order for the Jury to test the full game. However the settings can be changed.
+P.S : The mission were simplified in order for the Jury to test the full game. However, the settings can be changed.

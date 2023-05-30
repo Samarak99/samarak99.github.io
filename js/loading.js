@@ -16,10 +16,7 @@ BABYLON.DefaultLoadingScreen.prototype.displayLoadingUI = function () {
     var gameLoaderCss = document.createElement('style');
     gameLoaderCss.innerHTML = `
     #gameLoader{
-        background-image: url("./data/images/loader-background.jpeg");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-color : #2b9ea6;
         display: flex;
         align-items : center;
         justify-content : center;

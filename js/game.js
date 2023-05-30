@@ -3,6 +3,7 @@ let engine;
 let camera;
 let character;
 let points;
+let points_entries = [];
 let score;
 let remainingTime;
 let pause;
@@ -11,6 +12,7 @@ let frontVector;
 let cameraDirection = null;
 let mission;
 let loader = [];
+let new_high_score = false;
 
 //Underwater scene
 let light;
@@ -33,39 +35,39 @@ let currentMissionID = sessionStorage.getItem("current_mission") ? sessionStorag
 const gameSettings = [
     {
         key: 1,
-        time : 30,
+        time : 25,
         collected_points : 10,
         speed : 1.1,
         fogStart : 2,
     },
     {
         key: 2,
-        time : 30,
-        collected_points : 15,
+        time : 25,
+        collected_points : 13,
         speed : 1.2
     },
     {
         key: 3,
-        time : 50,
-        collected_points : 20,
+        time : 40,
+        collected_points : 25,
         speed : 1.2
     },
     {
         key: 4,
-        time : 50,
-        collected_points : 25,
-        speed : 1.7
-    },
-    {
-        key: 5,
-        time : 60,
+        time : 40,
         collected_points : 30,
         speed : 1.7
     },
     {
+        key: 5,
+        time : 50,
+        collected_points : 40,
+        speed : 1.7
+    },
+    {
         key: 6,
-        time : 60,
-        collected_points : 35,
+        time : 50,
+        collected_points : 45,
         speed : 1.7
     }
 ];
@@ -79,6 +81,10 @@ window.onload = loadGame;
 
 
 async  function loadGame(){
+    if(currentMissionID > 6)
+        currentMissionID = 6;
+
+
     mission = getObjectByKey(parseInt(currentMissionID));
 
     //Setting time according to each mission and target score
@@ -142,6 +148,9 @@ async  function loadGame(){
         //once all models are loaded we remove loading UI
         // Loader minimum time
         var minimumLoaderDuration = 1000; //milliseconds
+        //added this because sometimes on the first mission is takes time for the sand to load. so to make sure the laoder doesn't appear before.
+        if(mission.key === 1 && !sessionStorage.getItem('mission_completed'))
+            minimumLoaderDuration = 4000;
         //first add class to fade
         setTimeout(function (){
             document.getElementById("gameLoader").classList.add('fade');
@@ -162,6 +171,11 @@ async  function loadGame(){
     engine.runRenderLoop(()=>{
         //render scene here like animation or something that is moving.
         scene.render();
+
+        //For each entry point run animation on loop
+        for (const entries of points_entries){
+            entries.animationGroups[0].play();
+        }
 
         // Check for collisions with points
         for (const point of points) {
@@ -204,6 +218,7 @@ function startGame(){
         }
 
         if(remainingTime <= 0 ){
+            updateHighScore();
             if(score < mission.collected_points){
                 pause = true;
                 gameOverSFX.play();
@@ -216,8 +231,10 @@ function startGame(){
                 YouWonInterface(currentMissionID, scene);
 
                 //Level up Phase
-                if(currentMissionID === parseInt(MissionID) + 1)
+                if(parseInt(currentMissionID) === parseInt(MissionID) + 1){
                     sessionStorage.setItem("mission_completed", currentMissionID);
+                }
+
             }
         }
     }, 1000);
@@ -281,6 +298,30 @@ function updateScore(){
     progressElement.style.width = percentage + '%';
 }
 
+function updateHighScore(){
+
+    // This function to create or update the high score according to previous games
+    let high_scores = sessionStorage.getItem("high_scores");
+    if (!high_scores) {
+        high_scores = {};
+    } else {
+        high_scores = JSON.parse(high_scores);
+    }
+
+    if (high_scores[mission.key]) {
+        const previous_high_score = high_scores[mission.key];
+
+        if (parseInt(score) > parseInt(previous_high_score)) {
+            high_scores[mission.key] = score;
+            new_high_score = true;
+        }
+    } else {
+        high_scores[mission.key] = score;
+    }
+
+    sessionStorage.setItem('high_scores', JSON.stringify(high_scores));
+}
+
 
 //Scene
 
@@ -292,8 +333,10 @@ function CreateScene(){
 function CreateUnderwaterScene(){
     return new Promise((resolve) => {
         let fogStart = 20;
+        //in First mission the fog should be more, so that is why I have this option here
         if(mission.fogStart)
             fogStart = mission.fogStart;
+
         // setup fog in the scene
         scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
         scene.fogStart = fogStart;
@@ -326,7 +369,7 @@ function CreateUnderwaterScene(){
             nodeMaterial.name = "causticMaterial";
             waterPlane.material = nodeMaterial;
         });
-        // QHB2ME#4
+        // QHB2ME#4 : personal caustic shadows created
 
         //now we project to the main camera what the texture camera is seeing
         var renderTarget = new BABYLON.RenderTargetTexture("RTT", 1024, scene);
@@ -423,10 +466,8 @@ async function CreateMeshes() {
                 meshes.push(node);
             }
 
-            meshes.push(entries.rootNodes[0]);
-            // meshes.push(node); // Add the instantiated mesh to the meshes array
-            // node.layerMask = 3;
-
+            points_entries.push(entries);
+            // meshes.push(entries.rootNodes[0]);
         }
 
         //Add Plastic Bottle Trashes
@@ -452,7 +493,7 @@ async function CreateMeshes() {
 
 function CreateBoundingBox() {
     // Create a bounding box for the character
-    const bounder = BABYLON.MeshBuilder.CreateBox("bounderbox", { width: 3, height: 3, depth: 2 }, scene);
+    const bounder = BABYLON.MeshBuilder.CreateBox("bounderbox", { width: 3, height: 3, depth: 3 }, scene);
     bounder.checkCollisions = true;
     bounder.isVisible = false;
 
@@ -624,14 +665,15 @@ function CreatePauseMenu(scene){
     restartButton.width = "150px";
     restartButton.height = "40px";
     restartButton.top = "-70px";
+    restartButton.hoverCursor = "pointer";
     restartButton.thickness = 0;
-    restartButton.hoverCursor = 'pointer';
-    pauseMenu.addControl(restartButton);
 
     const restartImage = new BABYLON.GUI.Image("backgroundImage", "./data/images/game/restart.png");
     restartImage.width = "100%";
     restartImage.height = "100%";
     restartButton.addControl(restartImage);
+
+    pauseMenu.addControl(restartButton);
 
     // Create continue button
     const continueButton = BABYLON.GUI.Button.CreateSimpleButton("continueButton", "");
@@ -728,8 +770,8 @@ function CreatePauseMenu(scene){
 }
 
 function AnimateCamera(){
-    // //Move Camera
-    // const targetCameraPosition = character.position.clone().add(new BABYLON.Vector3(0, 0, -10));
+    //Move Camera
+    // const targetCameraPosition = character.position.clone();
     // const cameraAnimation = new BABYLON.Animation(
     //     "cameraAnimation",
     //     "position",
@@ -861,8 +903,24 @@ function YouWonInterface(levelID , scene){
     const gameWonText = new BABYLON.GUI.Image("backgroundImage", "./data/images/game/you_wonz.png");
     gameWonText.width = "300px";
     gameWonText.height = "100px";
-    gameWonText.top = "-150px";
+    gameWonText.top = "-170px";
     gameWonMenu.addControl(gameWonText);
+
+    // If the user updated his high score show new high score
+    if(new_high_score){
+        // New High score text block
+        const highScoreText = new BABYLON.GUI.TextBlock();
+        highScoreText.text = 'New HighScore: ' + score.toString() +" !!";
+        highScoreText.fontSize = 30;
+        highScoreText.fontFamily = 'Beachday';
+        highScoreText.shadowColor = "#2F4858";
+        highScoreText.shadowOffsetX = 2;
+        highScoreText.shadowOffsetY = 2;
+        highScoreText.color = '#c29f55';
+        highScoreText.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+        highScoreText.top = "-115px";
+        gameWonMenu.addControl(highScoreText);
+    }
 
 
     //Add object image:
@@ -870,9 +928,9 @@ function YouWonInterface(levelID , scene){
     const image = new BABYLON.GUI.Image("image", path);
     image.width = "130px";
     image.height = "130px";
-    image.stretch = BABYLON.GUI.Image.STRETCH_UNIFORM;
+    // image.stretch = BABYLON.GUI.Image.STRETCH_UNIFORM;
     image.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-    image.top = "-30px";
+    image.top = "-20px";
     gameWonMenu.addControl(image);
 
     // Add buttons on right
@@ -888,7 +946,7 @@ function YouWonInterface(levelID , scene){
     continueButton.height = "40px";
     continueButton.thickness = 0;
     continueButton.hoverCursor = 'pointer';
-    continueButton.top = '80px';
+    continueButton.top = '90px';
     buttonsContainer.addControl(continueButton);
 
     const continueImage = new BABYLON.GUI.Image("backgroundImage", "./data/images/game/continue.png");
@@ -896,11 +954,15 @@ function YouWonInterface(levelID , scene){
     continueImage.height = "100%";
     continueButton.addControl(continueImage);
 
+    // In case user is in last mission
+    if(mission.key === 6)
+        continueButton.isVisible = false;
+
     // Create home button
     const homeButton = BABYLON.GUI.Button.CreateSimpleButton("homeButton", "");
     homeButton.width = "150px";
     homeButton.height = "40px";
-    homeButton.top = "140px";
+    homeButton.top = "150px";
     homeButton.thickness = 0;
     homeButton.hoverCursor = 'pointer';
     buttonsContainer.addControl(homeButton);
@@ -912,7 +974,13 @@ function YouWonInterface(levelID , scene){
 
     continueButton.onPointerDownObservable.add(function() {
         // Continue game depending on last mission
-       window.location.reload();
+
+        let next_mission = parseInt(currentMissionID) + 1;
+        if(next_mission > 6 )
+            next_mission = 6;
+        sessionStorage.setItem("current_mission", next_mission);
+
+        window.location.reload();
     });
 
     homeButton.onPointerDownObservable.add(function() {

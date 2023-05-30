@@ -138,6 +138,7 @@ function initInterface(){
             await createHomeBox();
             await createMissionsBox();
             await createPrizesBox();
+            await createScoreBox();
             await createBottomBar();
 
             // All functions have completed execution
@@ -305,6 +306,7 @@ function createHomeBox(){
     playButton.height = "76px";
     playButton.thickness = 0;
     playButton.top = '150px';
+    playButton.hoverCursor = 'pointer';
 
     // Create the background image for the button
     const backgroundImageBTN = new BABYLON.GUI.Image("backgroundImage", "./data/images/buttons/play.png");
@@ -420,6 +422,8 @@ function createMissionsBox(){
         backgroundImageHome.height = "100%";
         button.addControl(backgroundImageHome);
 
+        console.log(item);
+
         if(item.access){
             button.hoverCursor = 'pointer';
             // Apply hover effect using Babylon.js GUI properties
@@ -453,6 +457,91 @@ function createMissionsBox(){
 
             panel.addControl(imageWrapper);
         }
+    });
+
+}
+
+function createScoreBox(){
+    // Create the Missions box
+    scoreBox = new BABYLON.GUI.Rectangle();
+    scoreBox.width = "40%";
+    scoreBox.height = "100%";
+    scoreBox.thickness = 0;
+    scoreBox.isVisible = false;
+    guiLayer.addControl(scoreBox);
+
+    //GUI for Missions
+    const scoreStackPanel = new BABYLON.GUI.StackPanel();
+    scoreStackPanel.width = "100%";
+    scoreBox.addControl(scoreStackPanel);
+
+    const Line1 = new BABYLON.GUI.StackPanel();
+    Line1.width = "600px";
+    Line1.height = "80px";
+    Line1.isVertical = false;
+    Line1.paddingLeft = "50px";
+    scoreStackPanel.addControl(Line1);
+
+    const Line2 = new BABYLON.GUI.StackPanel();
+    Line2.width = "600px";
+    Line2.height = '80px'
+    Line2.isVertical = false;
+    Line2.paddingLeft = "50px";
+    scoreStackPanel.addControl(Line2);
+
+    const Line3 = new BABYLON.GUI.StackPanel();
+    Line3.width = "600px";
+    Line3.height = '80px'
+    Line3.isVertical = false;
+    Line3.paddingLeft = "50px";
+    scoreStackPanel.addControl(Line3);
+
+    // Loop through the data array and create controls for each object
+    data.forEach(function (item, index) {
+        const panel = new BABYLON.GUI.StackPanel();
+        panel.width = "300px";
+        panel.isVertical = false;
+        panel.horizontalAlignment  = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+
+        if(index < 2){
+            Line1.addControl(panel);
+        }else if(index >= 2 && index < 4){
+            Line2.addControl(panel);
+        }else{
+            Line3.addControl(panel);
+        }
+
+        const missionPanel = new BABYLON.GUI.StackPanel();
+        missionPanel.width = "300px";
+        missionPanel.isVertical = false;
+        panel.addControl(missionPanel);
+
+        // Set the background image for Home
+        const btn_index = index + 1;
+        const mission_nb = new BABYLON.GUI.Image("backgroundImage", "./data/images/buttons/mission-"+btn_index+".png");
+        mission_nb.stretch = BABYLON.GUI.Image.STRETCH_UNIFORM; // Set stretch mode to uniform
+        mission_nb.width = "150px";
+        mission_nb.height = "63px";
+        missionPanel.addControl(mission_nb);
+
+        let high_scores = sessionStorage.getItem("high_scores");
+        if (!high_scores) {
+            high_scores = {};
+        } else {
+            high_scores = JSON.parse(high_scores);
+        }
+
+        const scoreText = new BABYLON.GUI.TextBlock();
+        scoreText.text = high_scores[btn_index] ? high_scores[btn_index] : '0';
+        scoreText.fontSize = 40;
+        scoreText.fontFamily = 'Beachday';
+        scoreText.color = '#c29f55';
+        scoreText.shadowColor = "#2F4858";
+        scoreText.shadowOffsetX = 2;
+        scoreText.left = "50px";
+        scoreText.width = "70px";
+        missionPanel.addControl(scoreText);
+
     });
 
 }
@@ -587,7 +676,7 @@ function createBottomBar(){
     // Create the bottom bar with Prizes and Missions buttons
     const bottomBar = new BABYLON.GUI.Rectangle();
     bottomBar.width = "700px";
-    bottomBar.height = "150px";
+    bottomBar.height = "220px";
     bottomBar.thickness = 0;
     bottomBar.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
     guiLayer.addControl(bottomBar);
@@ -596,8 +685,9 @@ function createBottomBar(){
     prizesButton.width = "150px";
     prizesButton.height = "103px";
     prizesButton.thickness = 0;
-    prizesButton.left = "-200px";
-    prizesButton.top = "-35px";
+    // prizesButton.left = "-200px";
+    prizesButton.top = "20px";
+    prizesButton.hoverCursor = 'pointer';
     bottomBar.addControl(prizesButton);
 
     // Set the background image
@@ -612,7 +702,8 @@ function createBottomBar(){
     missionsButton.height = "60px";
     missionsButton.left = "220px";
     missionsButton.thickness = 0;
-    missionsButton.top = '-35px';
+    missionsButton.top = '20px';
+    missionsButton.hoverCursor = 'pointer';
     bottomBar.addControl(missionsButton);
 
     // Set the background image for missions
@@ -622,14 +713,32 @@ function createBottomBar(){
     backgroundImageMissions.height = "100%";
     missionsButton.addControl(backgroundImageMissions);
 
+    // Score Board Buttons
+    const scoreBoardButton = BABYLON.GUI.Button.CreateSimpleButton("scoreBoardButton", "");
+    scoreBoardButton.width = "200px";
+    scoreBoardButton.height = "60px";
+    scoreBoardButton.left = "-220px";
+    scoreBoardButton.thickness = 0;
+    scoreBoardButton.top = '20px';
+    scoreBoardButton.hoverCursor = 'pointer';
+    bottomBar.addControl(scoreBoardButton);
+
+    // Set the background image for missions
+    const backgroundImageScore = new BABYLON.GUI.Image("backgroundImageScore", "./data/images/buttons/scoreboard.png");
+    backgroundImageScore.stretch = BABYLON.GUI.Image.STRETCH_UNIFORM; // Set stretch mode to uniform
+    backgroundImageScore.width = "100%";
+    backgroundImageScore.height = "100%";
+    scoreBoardButton.addControl(backgroundImageScore);
+
     // Create the home button for the middle box
     const homeButton = BABYLON.GUI.Button.CreateSimpleButton("homeButton", "");
-    homeButton.width = "150px";
-    homeButton.height = "76px";
-    // homeButton.top = '20px';
+    homeButton.width = "140px";
+    homeButton.height = "70px";
     homeButton.thickness = 0;
-    homeButton.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    // homeButton.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
     homeButton.isVisible = false; // Hide the home button initially
+    homeButton.hoverCursor = 'pointer';
+    homeButton.top = '-70px';
     bottomBar.addControl(homeButton);
 
     // Set the background image for Home
@@ -645,6 +754,7 @@ function createBottomBar(){
         homeButton.isVisible = true;
         homeBox.isVisible = false;
         missionsBox.isVisible = false;
+        scoreBox.isVisible = false;
         prizesBox.isVisible = true;
         WoodFrameBox.isVisible  = false;
     });
@@ -664,6 +774,7 @@ function createBottomBar(){
         homeButton.isVisible = true;
         homeBox.isVisible = false;
         missionsBox.isVisible = true;
+        scoreBox.isVisible = false;
         prizesBox.isVisible = false;
         WoodFrameBox.isVisible  = true;
 
@@ -686,7 +797,16 @@ function createBottomBar(){
         missionsBox.isVisible = false;
         prizesBox.isVisible = false;
         WoodFrameBox.isVisible  = true;
+        scoreBox.isVisible = false;
+    });
 
+    // Handle home button click
+    scoreBoardButton.onPointerUpObservable.add(function () {
+        homeButton.isVisible = true;
+        homeBox.isVisible = false;
+        missionsBox.isVisible = false;
+        prizesBox.isVisible = false;
+        scoreBox.isVisible = true;
     });
 
     // Apply hover effect using Babylon.js GUI properties
@@ -704,6 +824,8 @@ function redirectToGame(missionId = null){
 
     if(missionId !== null){
         sessionStorage.setItem("current_mission", missionId.toString());
+    }else{
+        sessionStorage.removeItem('current_mission');
     }
 
     window.location.href = '/game.html';
