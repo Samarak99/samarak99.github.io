@@ -2,20 +2,21 @@
 
 ![EcoMind Logo](./data/images/logo.png)
 
-| Table of Contents                                                          |
-|----------------------------------------------------------------------------|
-| [Introduction & Game Story](#introduction--game-story)                     |
-| [GamePlay, Installation & Controls](#gameplay-installation--controls)      |
-| [Code Part : ](#code-part)                                                 |
-| - [Main Challenge 1: Movement](#main-challenge-1-movement)                 |
-| - [Main Challenge 2: BABYLON.GUI](#main-challenge-2-babylongui)            |
+| Table of Contents                                                     |
+|-----------------------------------------------------------------------|
+| [Introduction & Game Story](#introduction--game-story)                |
+| [GamePlay, Installation & Controls](#gameplay-installation--controls) |
+| [Code Part ](#code-part)                                              |
+| - [Main Challenge 1: Movement](#main-challenge-1-movement)            |
+| - [Main Challenge 2: BABYLON.GUI](#main-challenge-2-babylongui)       |
 | - [Main Challenge 3: Underwater Scene](#main-challenge-3-underwater-scene) |
-| - [Additional Important Details](#additional-important-details)            |
-| [Design Part :](#design-part)                                              |
-| - [UI/UX](#ui-ux)                                                          |
-| - [Modelling](#modelling)                                                  |
-| [Sound Effects & Music Part](#sound-effects--music-part)                   |
-| [Personal Opinion of Babylon.Js](#personal-opinion)                        |
+| - [Additional Important Details](#additional-important-details)       |
+| [Design Part](#design-part)                                           |
+| - [UI/UX](#ui-ux)                                                     |
+| - [Modelling](#modelling)                                             |
+| [Video Part ](#video-part)                                            |
+| [Sound Effects & Music Part](#sound-effects--music-part)              |
+| [Personal Opinion of Babylon.Js](#personal-opinion)                   |
 
 
 ## Introduction <a id="introduction--game-story"></a>
@@ -247,6 +248,13 @@ A list of our 3D/2D Models made from scratch :
     <img src="./data/documentation/character-3.png" alt="character-3" style="width: 24%;">
     <img src="./data/documentation/mixamo.png" alt="mixamo" style="width: 24%;">
 </div>
+
+
+## Video Part <a id="video-part"></a>
+
+All videos were made on daVinci Resolve Software. I recorded the audios and then changed the pitch on the software.
+- [Trailer Video](https://www.youtube.com/watch?v=cJn66uCaL5Y) : showcase why I chose an underwater game.
+- [GamePlay Video](https://www.youtube.com/watch?v=YJ1v2kh3qCM&t=12s) : showcase the features of the game, and how to play.
 
 
 ## Sound Effects & Music Part  <a id="sound-effects--music-part"></a>

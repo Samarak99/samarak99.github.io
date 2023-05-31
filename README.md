@@ -20,7 +20,7 @@ Ultimately, your goal in EcoMind is to complete all the missions and earn the pr
 
 ### Personal Message
 
-This was the first time I developed a game on website, and I gave it all my passion,dedication, and knowledge in the field of web development. I focused on every single detail, from user interface, to user experience, to a smooth and easy navigating in the game, to design and music. 
+This was the first time I developed a game on website, and I gave it all my passion, dedication, and knowledge in the field of web development. I focused on every single detail, from user interface, to user experience, to a smooth and easy navigating in the game, to design and music. 
 Every single model or design is customised for this game, so I hope you will like this work of ART. 
 
 ## Special Thanks
@@ -30,6 +30,7 @@ Every single model or design is customised for this game, so I hope you will lik
 
 
 ## Controls
+
 Mouse: Use the mouse to interact with the game's interface and navigate underwater.
 
 
@@ -67,11 +68,12 @@ Mouse: Use the mouse to interact with the game's interface and navigate underwat
 
 ## Video Link
 
-[Link to be released soon](video_link)
+- [Trailer Video](https://www.youtube.com/watch?v=cJn66uCaL5Y)
+- [GamePlay Video](https://www.youtube.com/watch?v=YJ1v2kh3qCM&t=12s)
 
 ## Play the Game
 
-To be released soon
+[Play EcoMind](https://samarak99.github.io/)
 
 ## Installation
 

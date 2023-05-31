@@ -153,7 +153,7 @@ async  function loadGame(){
         var minimumLoaderDuration = 1000; //milliseconds
         //added this because sometimes on the first mission is takes time for the sand to load. so to make sure the laoder doesn't appear before.
         if(mission.key === 1 && !sessionStorage.getItem('mission_completed'))
-            minimumLoaderDuration = 0;
+            minimumLoaderDuration = 5000;
         //first add class to fade
         setTimeout(function (){
             document.getElementById("gameLoader").classList.add('fade');
@@ -200,7 +200,7 @@ function startGame(){
 
     setInterval(() => {
         if (pause) {
-            // backgroundMusic.pause();
+            backgroundMusic.pause();
             return;
         }
 
