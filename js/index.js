@@ -422,8 +422,6 @@ function createMissionsBox(){
         backgroundImageHome.height = "100%";
         button.addControl(backgroundImageHome);
 
-        console.log(item);
-
         if(item.access){
             button.hoverCursor = 'pointer';
             // Apply hover effect using Babylon.js GUI properties

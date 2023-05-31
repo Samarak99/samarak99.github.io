@@ -18,10 +18,16 @@ Ultimately, your goal in EcoMind is to complete all the missions and earn the pr
 
 - Samar Abi Khalil: MSc student for neuronal and cognitive systems at Université Côte d'Azur.
 
+### Personal Message
+
+This was the first time I developed a game on website, and I gave it all my passion,dedication, and knowledge in the field of web development. I focused on every single detail, from user interface, to user experience, to a smooth and easy navigating in the game, to design and music. 
+Every single model or design is customised for this game, so I hope you will like this work of ART. 
+
 ## Special Thanks
 
 - Elie Ibrahim: 3D Artist and Animator who created all models, and helped with the UI/UX.
 - Sassine Abi Khalil: Music Composer who created all music and sound effects.
+
 
 ## Controls
 Mouse: Use the mouse to interact with the game's interface and navigate underwater.
@@ -30,33 +36,33 @@ Mouse: Use the mouse to interact with the game's interface and navigate underwat
 ## Missions
 
 1. Mission 1: Recycled Mask
-    - Time: 30 seconds
-    - Objective: Collect 15 trash to obtain a recycled mask. The mask enhances your underwater visibility, allowing you to navigate through the ocean depths with clarity in other missions.
+    - Time: 25 seconds
+    - Objective: Collect 10 trash to obtain a recycled mask. The mask enhances your underwater visibility, allowing you to navigate through the ocean depths with clarity in other missions.
     - <img src="./data/images/prizes/mask.png" alt="mask" style="width: 200px;">
 
 2. Mission 2: Recycled Snorkel
-    - Time: 30 seconds
-    - Objective: Collect 25 trash to obtain a recycled snorkel. The snorkel extends your underwater time in the next missions by conserving precious oxygen.
+    - Time: 25 seconds
+    - Objective: Collect 13 trash to obtain a recycled snorkel. The snorkel extends your underwater time in the next missions by conserving precious oxygen.
     - <img src="./data/images/prizes/snorkel.png" alt="snorkel" style="width: 200px;">
 
 3. Mission 3: Recycled Fins
-    - Time: 50 seconds
-    - Objective: Collect 35 trash to obtain recycled fins. The fins increase your swimming speed and agility.
+    - Time: 40 seconds
+    - Objective: Collect 25 trash to obtain recycled fins. The fins increase your swimming speed and agility.
     - <img src="./data/images/prizes/fin.png" alt="fin" style="width: 200px;">
 
 4. Mission 4: Environmental Awareness Badge
-    - Time: 50 seconds
-    - Objective: Collect 45 trash to obtain the Environmental Awareness Badge. This badge signifies your commitment to sustainable practices and serves as a reminder of your pivotal role in raising awareness about the environmental challenges we face.
+    - Time: 40 seconds
+    - Objective: Collect 30 trash to obtain the Environmental Awareness Badge. This badge signifies your commitment to sustainable practices and serves as a reminder of your pivotal role in raising awareness about the environmental challenges we face.
     - <img src="./data/images/prizes/awareness.png" alt="awareness" style="width: 200px;">
 
 5. Mission 5: Marine Conservation Certificate
-    - Time: 60 seconds
-    - Objective: Collect 50 trash to obtain the Marine Conservation Certificate. This prestigious certificate acknowledges your expertise in marine conservation and recognizes your contributions towards a cleaner and healthier ocean ecosystem.
+    - Time: 50 seconds
+    - Objective: Collect 35 trash to obtain the Marine Conservation Certificate. This prestigious certificate acknowledges your expertise in marine conservation and recognizes your contributions towards a cleaner and healthier ocean ecosystem.
     - <img src="./data/images/prizes/marine_badge.png" alt="marine_badge" style="width: 200px;">
 
-6. Mission 6: EcoMind Completion Certificate
-    - Time: 60 seconds
-    - Objective: Collect 60 trash to obtain the EcoMind Completion Certificate. With the EcoMind Certificate, you possess the tools and inspiration to create a sustainable future for our planet.
+6. Mission 6: EcoMind Completion Trophy
+    - Time: 50 seconds
+    - Objective: Collect 40 trash to obtain the EcoMind Completion Trophy. With the EcoMind Trophy, you possess the tools and inspiration to create a sustainable future for our planet.
     - <img src="./data/images/prizes/trophy.png" alt="trophy" style="width: 200px;">
 
 ## Video Link

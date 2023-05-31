@@ -99,6 +99,9 @@ async  function loadGame(){
     engine.displayLoadingUI();
 
     frontVector = new BABYLON.Vector3(0, 1, 0); // used to init place of character, bounding box, and camera
+    if(mission.key > 3)
+        frontVector = new BABYLON.Vector3(0, 2, 0); // used to init place of character, bounding box, and camera
+
     scene = CreateScene();
     character = await CreateCharacter();
     bounder = CreateBoundingBox();
@@ -113,7 +116,7 @@ async  function loadGame(){
 
             //Linking character to bounding box
             character.parent = bounder;
-            character.position = new BABYLON.Vector3(bounder.position.x, bounder.position.y - 1, bounder.position.z);
+            character.position = new BABYLON.Vector3(bounder.position.x, bounder.position.y - 2, bounder.position.z);
 
             points = await CreateMeshes();
             score = 0;
@@ -150,7 +153,7 @@ async  function loadGame(){
         var minimumLoaderDuration = 1000; //milliseconds
         //added this because sometimes on the first mission is takes time for the sand to load. so to make sure the laoder doesn't appear before.
         if(mission.key === 1 && !sessionStorage.getItem('mission_completed'))
-            minimumLoaderDuration = 4000;
+            minimumLoaderDuration = 0;
         //first add class to fade
         setTimeout(function (){
             document.getElementById("gameLoader").classList.add('fade');
@@ -158,7 +161,6 @@ async  function loadGame(){
 
         //then remove it from body and init the counter to start the game
         setTimeout(function (){
-            console.log('here');
             engine.hideLoadingUI();
             initCounter();
         },minimumLoaderDuration + 500);
@@ -430,18 +432,18 @@ async function CreateCharacter(){
     let mission_three_character_name = "character-m3.glb"; // With mask and snorkel , without fin
 
     let current_character = main_character_name;
-    // if(mission.key === 1)
-    //     current_character = mission_one_character_name;
-    // else if(mission.key === 2)
-    //     current_character = mission_two_character_name;
-    // else if(mission.key === 3)
-    //     current_character = mission_three_character_name;
+    if(mission.key === 1)
+        current_character = mission_one_character_name;
+    else if(mission.key === 2)
+        current_character = mission_two_character_name;
+    else if(mission.key === 3)
+        current_character = mission_three_character_name;
 
 
     return new Promise(async (resolve) => {
         const {meshes} = await BABYLON.SceneLoader.ImportMeshAsync("","./data/models/game/",current_character);
         const character = meshes[0];
-        character.position = new BABYLON.Vector3(0, 1, 0);
+        character.position = frontVector;
         character.layerMask = 1;
 
         resolve(character);
@@ -507,7 +509,14 @@ async function CreateMeshes() {
 
 function CreateBoundingBox() {
     // Create a bounding box for the character
-    const bounder = BABYLON.MeshBuilder.CreateBox("bounderbox", { width: 3, height: 3, depth: 3 }, scene);
+    let depth = 7;
+    let height = 2.5;
+    if(mission.key === 1)
+        depth = 6.2;
+
+    if (mission.key >3)
+        height = 4
+    const bounder = BABYLON.MeshBuilder.CreateBox("bounderbox", { width: 3, height: height, depth: depth }, scene);
     bounder.checkCollisions = true;
     bounder.isVisible = false;
 

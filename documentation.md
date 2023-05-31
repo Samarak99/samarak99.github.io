@@ -188,7 +188,7 @@ Consequently, I added the following condition to make sure that first time there
 
 ## Design Part  <a id="design-part"></a>
 
-With the help of Elie Ibrahim, a 3D artist and animator and also my partner in life and any project we develop, we created all our models from scratch, and we focused on the user interface and user experience. The Software used were Blender and Adobe Substance 3D.
+With the help of Elie Ibrahim, a 3D artist and animator and also my partner in life and any project we develop, we created all our models from scratch, and we focused on the user interface and user experience. The Software used were Blender and Adobe Substance 3D.For the character animation we used Adobe Mixamo.
 
 We really tried to take this competition to a higher level in focusing on all the designs. Even the loader, and the buttons. 
 
@@ -241,6 +241,13 @@ A list of our 3D/2D Models made from scratch :
 - <img src="./data/documentation/bottle.jpeg" alt="bottle" style="width: 600px;">
   <img src="./data/documentation/can.jpeg" alt="can" style="width: 600px;">
 - Character
+- <div style="display: flex; justify-content: center;">
+      <img src="./data/documentation/character-1.png" alt="character-1" style="width: 24%;">
+    <img src="./data/documentation/character-2.png" alt="character-2" style="width: 24%;">
+    <img src="./data/documentation/character-3.png" alt="character-3" style="width: 24%;">
+    <img src="./data/documentation/mixamo.png" alt="mixamo" style="width: 24%;">
+</div>
+
 
 ## Sound Effects & Music Part  <a id="sound-effects--music-part"></a>
 
